@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rabbitmq
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: platform
+  sources:
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    path: platform/shared-infra/messaging/rabbitmq/helm
+    helm:
+      releaseName: rabbitmq
+      valueFiles:
+        - $values/environments/dev/messaging/rabbitmq/values.yaml
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    ref: values
+  destination:
+    name: microbank-dev-cluster
+    namespace: rabbitmq
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

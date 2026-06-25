@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: platform
+  sources:
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    path: platform/shared-infra/database/postgres/helm
+    helm:
+      releaseName: postgres
+      valueFiles:
+        - $values/environments/dev/database/postgres/values.yaml
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    ref: values
+  destination:
+    name: microbank-dev-cluster
+    namespace: postgres
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

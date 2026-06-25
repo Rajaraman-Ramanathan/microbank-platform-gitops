@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  project: platform
+  sources:
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    path: platform/identity/keycloak/helm
+    helm:
+      releaseName: keycloak
+      valueFiles:
+        - $values/environments/dev/identity/keycloak/values.yaml
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    ref: values
+  destination:
+    name: microbank-dev-cluster
+    namespace: keycloak
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

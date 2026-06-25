@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keycloak-ingress
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    path: platform/identity/keycloak/ingress
+  destination:
+    name: microbank-dev-cluster
+    namespace: keycloak
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

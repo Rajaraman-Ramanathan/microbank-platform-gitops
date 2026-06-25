@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - global-bootstrap.yaml
+  - ingress-nginx.yaml
+  - maildev.yaml
+  - minio.yaml
+  - postgres.yaml
+  - rabbitmq.yaml
+  - redis.yaml
+  - keycloak-bootstrap.yaml
+  - postgres-bootstrap.yaml
+  - minio-bootstrap.yaml
+  - keycloak.yaml
+  - keycloak-ingress.yaml

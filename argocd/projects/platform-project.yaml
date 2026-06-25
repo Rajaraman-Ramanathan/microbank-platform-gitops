@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  description: Platform Infrastructure and Services
+
+  sourceRepos:
+  - https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+
+  - namespace: '*'
+    name: microbank-dev-cluster
+
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'

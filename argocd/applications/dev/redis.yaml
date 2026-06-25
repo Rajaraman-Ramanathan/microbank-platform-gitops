@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: redis
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: platform
+  sources:
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    path: platform/shared-infra/cache/redis/helm
+    helm:
+      releaseName: redis
+      valueFiles:
+        - $values/environments/dev/cache/redis/values.yaml
+  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    targetRevision: dev
+    ref: values
+  destination:
+    name: microbank-dev-cluster
+    namespace: redis
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

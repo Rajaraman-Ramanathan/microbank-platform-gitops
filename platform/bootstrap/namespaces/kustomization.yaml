@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- redis.yaml
+- rabbitmq.yaml
+- minio.yaml
+- postgres.yaml
+- keycloak.yaml
+- maildev.yaml
+- ingress-nginx.yaml
+- account.yaml
+- apigateway.yaml
+- auth.yaml
+- document.yaml
+- transaction.yaml
+- notification.yaml
