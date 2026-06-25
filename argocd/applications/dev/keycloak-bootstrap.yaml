@@ -8,7 +8,7 @@ metadata:
 spec:
   project: platform
   source:
-    repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+    repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     path: environments/dev/identity/keycloak/bootstrap
   destination:

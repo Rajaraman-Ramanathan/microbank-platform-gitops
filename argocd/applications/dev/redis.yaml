@@ -8,14 +8,14 @@ metadata:
 spec:
   project: platform
   sources:
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     path: platform/shared-infra/cache/redis/helm
     helm:
       releaseName: redis
       valueFiles:
         - $values/environments/dev/cache/redis/values.yaml
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     ref: values
   destination:

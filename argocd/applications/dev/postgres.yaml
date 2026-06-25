@@ -8,14 +8,14 @@ metadata:
 spec:
   project: platform
   sources:
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     path: platform/shared-infra/database/postgres/helm
     helm:
       releaseName: postgres
       valueFiles:
         - $values/environments/dev/database/postgres/values.yaml
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     ref: values
   destination:

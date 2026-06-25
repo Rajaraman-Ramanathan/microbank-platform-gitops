@@ -9,7 +9,7 @@ spec:
   description: Platform Infrastructure and Services
 
   sourceRepos:
-  - https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
 
   destinations:
   - namespace: argocd

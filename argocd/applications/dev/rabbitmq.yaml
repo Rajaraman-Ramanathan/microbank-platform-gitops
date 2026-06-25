@@ -8,14 +8,14 @@ metadata:
 spec:
   project: platform
   sources:
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     path: platform/shared-infra/messaging/rabbitmq/helm
     helm:
       releaseName: rabbitmq
       valueFiles:
         - $values/environments/dev/messaging/rabbitmq/values.yaml
-  - repoURL: https://github.com/Rajaraman-Ramanathan/platform-gitops.git
+  - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: dev
     ref: values
   destination:
