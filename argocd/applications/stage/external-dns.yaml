@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "25"
+spec:
+  project: platform
+  sources:
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: stage
+      path: platform/aws/external-dns/helm
+      helm:
+        releaseName: external-dns
+        valueFiles:
+          - $values/environments/stage/external-dns/values.yaml
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: stage
+      ref: values
+  destination:
+    name: microbank-stage-cluster
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

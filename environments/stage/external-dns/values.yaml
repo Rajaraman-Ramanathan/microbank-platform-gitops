@@ -1,0 +1,55 @@
+external-dns:
+  replicaCount: 2
+
+  provider: aws
+
+  policy: sync
+
+  registry: txt
+
+  txtOwnerId: microbank-stage
+
+  ingressClassFilters:
+    - nginx
+
+  domainFilters:
+    - microbankapp.com
+
+  serviceAccount:
+    create: true
+    name: external-dns
+
+    annotations:
+      eks.amazonaws.com/role-arn: ""
+
+  sources:
+    - service
+    - ingress
+
+  interval: 1m
+
+  triggerLoopOnEvent: true
+
+  logLevel: info
+
+  logFormat: text
+
+  priorityClassName: system-cluster-critical
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  affinity: {}
+
+  nodeSelector: {}
+
+  tolerations: []
