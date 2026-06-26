@@ -1,0 +1,36 @@
+aws-load-balancer-controller:
+  clusterName: microbank-stage
+
+  region: ap-south-1
+
+  vpcId: ""
+
+  replicaCount: 2
+
+  serviceAccount:
+    create: true
+    name: aws-load-balancer-controller
+    annotations:
+      eks.amazonaws.com/role-arn: ""
+
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  priorityClassName: system-cluster-critical
+
+  enableServiceMutatorWebhook: true
+
+  tolerations: []
+
+  nodeSelector: {}
+
+  affinity: {}
