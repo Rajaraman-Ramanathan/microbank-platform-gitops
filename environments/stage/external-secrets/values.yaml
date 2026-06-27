@@ -1,0 +1,39 @@
+external-secrets:
+
+  installCRDs: true
+
+  replicaCount: 2
+
+  leaderElect: true
+
+  priorityClassName: system-cluster-critical
+
+  serviceAccount:
+    create: true
+    name: external-secrets
+
+    annotations:
+      eks.amazonaws.com/role-arn: ""
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  podDisruptionBudget:
+    enabled: true
+
+  metrics:
+    service:
+      enabled: true
+
+  webhook:
+    create: true
+    replicaCount: 2
+
+  certController:
+    create: true
+    replicaCount: 2

@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - aws-load-balancer-controller.yaml
   - external-dns.yaml
+  - external-secrets.yaml
+  - ebs-csi-driver.yaml

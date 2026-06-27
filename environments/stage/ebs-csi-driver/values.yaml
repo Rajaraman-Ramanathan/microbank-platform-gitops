@@ -1,0 +1,40 @@
+aws-ebs-csi-driver:
+
+  controller:
+    replicaCount: 2
+
+    priorityClassName: system-cluster-critical
+
+    serviceAccount:
+      create: true
+      name: ebs-csi-controller-sa
+
+      annotations:
+        eks.amazonaws.com/role-arn: ""
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+  node:
+    priorityClassName: system-node-critical
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  storageClasses: []
+
+  enableVolumeScheduling: true
+
+  enableVolumeResizing: true
+
+  enableVolumeSnapshot: true

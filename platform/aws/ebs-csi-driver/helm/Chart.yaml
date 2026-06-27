@@ -1,0 +1,11 @@
+apiVersion: v2
+name: ebs-csi-driver
+description: Enterprise wrapper chart for AWS EBS CSI Driver
+type: application
+
+version: 1.0.0
+
+dependencies:
+  - name: aws-ebs-csi-driver
+    version: 2.55.0
+    repository: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
