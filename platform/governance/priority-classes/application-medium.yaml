@@ -1,0 +1,7 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: application-medium
+value: 30000
+globalDefault: true
+description: Default priority for application workloads.

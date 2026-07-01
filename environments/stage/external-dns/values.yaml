@@ -34,7 +34,7 @@ external-dns:
 
   logFormat: text
 
-  priorityClassName: system-cluster-critical
+  priorityClassName: platform-critical
 
   resources:
     requests:

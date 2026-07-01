@@ -25,7 +25,7 @@ aws-load-balancer-controller:
       cpu: 500m
       memory: 512Mi
 
-  priorityClassName: system-cluster-critical
+  priorityClassName: platform-critical
 
   enableServiceMutatorWebhook: true
 

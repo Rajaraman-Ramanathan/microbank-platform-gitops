@@ -6,7 +6,7 @@ external-secrets:
 
   leaderElect: true
 
-  priorityClassName: system-cluster-critical
+  priorityClassName: platform-critical
 
   serviceAccount:
     create: true

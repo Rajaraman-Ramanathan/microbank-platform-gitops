@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: storage-classes
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "9"
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+    targetRevision: stage
+    path: platform/storage/storage-classes
+  destination:
+    name: microbank-stage-cluster
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
