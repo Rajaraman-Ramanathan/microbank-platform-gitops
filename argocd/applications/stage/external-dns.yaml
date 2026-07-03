@@ -20,7 +20,7 @@ spec:
       ref: values
   destination:
     name: microbank-stage-cluster
-    namespace: kube-system
+    namespace: external-dns
   syncPolicy:
     automated:
       prune: true

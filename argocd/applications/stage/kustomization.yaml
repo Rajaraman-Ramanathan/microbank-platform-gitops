@@ -6,3 +6,7 @@ resources:
   - external-dns.yaml
   - external-secrets.yaml
   - ebs-csi-driver.yaml
+  - priority-classes.yaml
+  - storage-classes.yaml
+  - limit-ranges.yaml
+  - resource-quotas.yaml

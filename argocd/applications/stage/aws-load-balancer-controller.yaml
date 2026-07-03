@@ -19,8 +19,8 @@ spec:
       targetRevision: stage
       ref: values
   destination:
-    server: microbank-stage-cluster
-    namespace: kube-system
+    name: microbank-stage-cluster
+    namespace: aws-load-balancer-controller
   syncPolicy:
     automated:
       prune: true

@@ -15,3 +15,7 @@ resources:
 - document.yaml
 - transaction.yaml
 - notification.yaml
+- aws-load-balancer-controller.yaml
+- ebs-csi-driver.yaml
+- external-dns.yaml
+- external-secrets.yaml

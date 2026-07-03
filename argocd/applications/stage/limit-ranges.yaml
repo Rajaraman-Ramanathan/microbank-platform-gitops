@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: storage-classes
+  name: limit-ranges
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "9"
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   project: platform
   source:
     repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: stage
-    path: platform/storage/storage-classes
+    path: platform/governance/limit-ranges
   destination:
     name: microbank-stage-cluster
     namespace: default
