@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-prometheus
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: apigateway-ingress
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              tier: monitoring
+          podSelector:
+            matchLabels:
+              network-role: monitoring
+              app.kubernetes.io/name: prometheus
+      ports:
+        - protocol: TCP
+          port: 8124

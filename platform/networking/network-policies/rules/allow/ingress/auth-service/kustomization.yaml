@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: microbank-auth
+
+resources:
+  - allow-from-gateway.yaml
+  - allow-from-prometheus.yaml
+  - allow-from-account-service.yaml
+  - allow-from-transaction-service.yaml

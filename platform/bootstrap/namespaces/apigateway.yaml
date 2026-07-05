@@ -4,4 +4,4 @@ metadata:
   name: microbank-apigateway
   labels:
     pod-security.kubernetes.io/enforce: restricted
-    tier: workloads
+    tier: gateway

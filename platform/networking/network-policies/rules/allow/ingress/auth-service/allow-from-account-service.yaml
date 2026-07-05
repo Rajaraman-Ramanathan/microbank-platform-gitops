@@ -1,22 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-auth-from-account-service
-  namespace: microbank-dev
-  annotations:
-    argocd.argoproj.io/sync-wave: "7"
+  name: allow-from-account-service
 spec:
   podSelector:
     matchLabels:
-      network-role: backend
       app.kubernetes.io/name: auth-service
-
   policyTypes:
   - Ingress
-
   ingress:
   - from:
-    - podSelector:
+    - namespaceSelector:
+        matchLabels:
+          tier: workloads
+      podSelector:
         matchLabels:
           network-role: backend
           app.kubernetes.io/name: account-service

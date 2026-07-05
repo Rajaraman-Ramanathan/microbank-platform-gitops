@@ -1,26 +1,22 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-keycloak-from-ingress
-  namespace: keycloak
-  annotations:
-    argocd.argoproj.io/sync-wave: "7"
+  name: allow-from-gateway
 spec:
   podSelector:
     matchLabels:
-      network-role: identity
-
+      app.kubernetes.io/name: transaction-service
   policyTypes:
-    - Ingress
-
+  - Ingress
   ingress:
   - from:
     - namespaceSelector:
         matchLabels:
-          tier: ingress
+          tier: gateway
       podSelector:
         matchLabels:
-          app.kubernetes.io/name: ingress-nginx
+          network-role: gateway
+          app.kubernetes.io/name: apigateway-ingress
     ports:
     - protocol: TCP
-      port: 8080
+      port: 8083
