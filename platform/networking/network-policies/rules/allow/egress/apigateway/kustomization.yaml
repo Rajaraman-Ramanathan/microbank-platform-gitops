@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: microbank-apigateway
+
+resources:
+  - allow-auth-service.yaml
+  - allow-account-service.yaml
+  - allow-transaction-service.yaml
+  - allow-keycloak.yaml
+  - allow-dns.yaml
