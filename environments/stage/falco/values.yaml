@@ -1,0 +1,36 @@
+falco:
+
+  tty: true
+
+  jsonOutput: true
+
+  logLevel: info
+
+  priority: notice
+
+  collectors:
+    kubernetes:
+      enabled: true
+
+  falcosidekick:
+    enabled: false
+
+  serviceMonitor:
+    enabled: true
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  podLabels:
+    network-role: security
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: falco-wrapper
+description: Wrapper chart for Falco
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: falco
+    version: 4.21.0
+    repository: oci://ghcr.io/falcosecurity/charts
