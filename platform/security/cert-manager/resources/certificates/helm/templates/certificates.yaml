@@ -1,0 +1,20 @@
+{{- range .Values.certificates }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .name }}
+spec:
+  secretName: {{ .secretName }}
+  issuerRef:
+    kind: ClusterIssuer
+    name: {{ .issuer }}
+  commonName: {{ .commonName }}
+  dnsNames:
+{{ toYaml .dnsNames | nindent 4 }}
+  privateKey:
+    algorithm: {{ $.Values.privateKey.algorithm }}
+    size: {{ $.Values.privateKey.size }}
+  usages:
+{{ toYaml $.Values.usages | nindent 4 }}
+---
+{{- end }}
