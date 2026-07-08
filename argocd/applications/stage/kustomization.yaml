@@ -10,3 +10,8 @@ resources:
   - storage-classes.yaml
   - limit-ranges.yaml
   - resource-quotas.yaml
+  - cert-manager.yaml
+  - cert-manager-issuers.yaml
+  - cert-manager-certificates.yaml
+  - kyverno.yaml
+  - falco.yaml

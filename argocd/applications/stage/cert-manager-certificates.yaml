@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager-clusterissuers
+  name: cert-manager-certificates
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "41"
+    argocd.argoproj.io/sync-wave: "42"
 spec:
   project: platform
   sources:
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
-      path: platform/security/cert-manager/resources/clusterissuers/helm
+      path: platform/security/cert-manager/resources/certificates/helm
       helm:
-        releaseName: cert-manager-clusterissuers
+        releaseName: cert-manager-certificates
         valueFiles:
-          - $values/environments/stage/security/cert-manager/clusterissuers/values.yaml
+          - $values/environments/stage/security/cert-manager/certificates/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
       ref: values

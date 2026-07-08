@@ -14,7 +14,7 @@ spec:
       helm:
         releaseName: aws-ebs-csi-driver
         valueFiles:
-          - $values/environments/stage/ebs-csi-driver/values.yaml
+          - $values/environments/stage/aws/ebs-csi-driver/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
       ref: values

@@ -14,7 +14,7 @@ spec:
       helm:
         releaseName: external-dns
         valueFiles:
-          - $values/environments/stage/external-dns/values.yaml
+          - $values/environments/stage/aws/external-dns/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
       ref: values

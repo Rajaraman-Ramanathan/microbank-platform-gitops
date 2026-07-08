@@ -14,7 +14,7 @@ spec:
       helm:
         releaseName: aws-load-balancer-controller
         valueFiles:
-          - $values/environments/stage/aws-load-balancer-controller/values.yaml
+          - $values/environments/stage/aws/aws-load-balancer-controller/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
       ref: values

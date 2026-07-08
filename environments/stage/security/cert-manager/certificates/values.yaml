@@ -10,14 +10,14 @@ usages:
 certificates:
   - name: api-gateway-tls
     secretName: api-gateway-tls
-    issuer: letsencrypt-staging
+    issuer: letsencrypt
     commonName: api.stage.microbankapp.com
     dnsNames:
       - api.stage.microbankapp.com
 
   - name: keycloak-tls
     secretName: keycloak-tls
-    issuer: letsencrypt-staging
+    issuer: letsencrypt
     commonName: auth.stage.microbankapp.com
     dnsNames:
       - auth.stage.microbankapp.com

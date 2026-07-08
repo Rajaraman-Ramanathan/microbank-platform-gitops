@@ -14,7 +14,7 @@ spec:
       helm:
         releaseName: cert-manager
         valueFiles:
-          - $values/environments/stage/cert-manager/values.yaml
+          - $values/environments/stage/security/cert-manager/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
       targetRevision: stage
       ref: values
