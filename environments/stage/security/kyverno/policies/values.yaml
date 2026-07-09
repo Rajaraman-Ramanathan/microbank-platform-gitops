@@ -1,0 +1,139 @@
+###############################################################################
+# Global Policy Configuration
+###############################################################################
+
+global:
+  validationFailureAction: Audit
+  background: true
+  failurePolicy: Fail
+  emitWarning: true
+
+###############################################################################
+# Container Security Policies
+###############################################################################
+
+containers:
+  enabled: true
+  policy:
+    name: container-security-policy
+
+  ###########################################################################
+  # Require containerPort
+  ###########################################################################
+
+  containerPorts:
+    enabled: true
+
+  ###########################################################################
+  # Environment Variable Validation
+  ###########################################################################
+
+  envValidation:
+    enabled: true
+    sensitiveVariables:
+      - PASSWORD
+      - DB_PASSWORD
+      - DB_USERNAME
+      - DATABASE_PASSWORD
+      - DATABASE_USERNAME
+      - SECRET
+      - CLIENT_SECRET
+      - JWT_SECRET
+      - JWT_SIGNING_KEY
+      - TOKEN
+      - ACCESS_TOKEN
+      - REFRESH_TOKEN
+      - ACCESS_KEY
+      - SECRET_KEY
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - API_KEY
+      - PRIVATE_KEY
+
+  ###########################################################################
+  # Init Containers
+  ###########################################################################
+
+  initContainers:
+    enabled: true
+
+  ###########################################################################
+  # Lifecycle Hooks
+  ###########################################################################
+
+  lifecycleHooks:
+    enabled: true
+
+  ###########################################################################
+  # Termination Message Policy
+  ###########################################################################
+
+  terminationMessagePolicy:
+    enabled: true
+    requiredValue: FallbackToLogsOnError
+
+###############################################################################
+# Pod Security Policies
+###############################################################################
+
+podSecurity:
+  enabled: true
+  policy:
+    name: pod-security-policy
+
+  ###########################################################################
+  # Require runAsNonRoot
+  ###########################################################################
+
+  runAsNonRoot:
+    enabled: true
+
+  ###########################################################################
+  # Require ReadOnly Root Filesystem
+  ###########################################################################
+
+  readOnlyRootFilesystem:
+    enabled: true
+
+  ###########################################################################
+  # Disallow Privilege Escalation
+  ###########################################################################
+
+  allowPrivilegeEscalation:
+    enabled: true
+
+  ###########################################################################
+  # Linux Capabilities
+  ###########################################################################
+
+  capabilities:
+    enabled: true
+    requiredDropCapabilities:
+      - ALL
+
+  ###########################################################################
+  # Seccomp
+  ###########################################################################
+
+  seccomp:
+    enabled: true
+    requiredProfile: RuntimeDefault
+
+  ###########################################################################
+  # Reserved for Future Policies
+  ###########################################################################
+
+  hostNamespaces:
+    enabled: true
+
+  hostPath:
+    enabled: true
+
+  hostPorts:
+    enabled: true
+
+  procMount:
+    enabled: true
+
+  volumeTypes:
+    enabled: true

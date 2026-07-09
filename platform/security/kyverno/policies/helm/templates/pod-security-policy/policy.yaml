@@ -1,0 +1,50 @@
+{{- if .Values.podSecurity.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.podSecurity.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Pod Security
+    policies.kyverno.io/category: Runtime Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: |
+      Enforces runtime security controls for application workloads.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+
+{{ include "kyverno.podSecurity.rule.runAsNonRoot" . | nindent 4 }}
+
+{{ include "kyverno.podSecurity.rule.readOnlyRootFilesystem" . | nindent 4 }}
+
+{{ include "kyverno.podSecurity.rule.allowPrivilegeEscalation" . | nindent 4 }}
+
+{{ include "kyverno.podSecurity.rule.capabilities" . | nindent 4 }}
+
+{{ include "kyverno.podSecurity.rule.seccomp" . | nindent 4 }}
+
+{{/*
+{{ include "kyverno.podSecurity.rule.hostNamespaces" . | nindent 4 }}
+*/}}
+
+{{/*
+{{ include "kyverno.podSecurity.rule.hostPath" . | nindent 4 }}
+*/}}
+
+{{/*
+{{ include "kyverno.podSecurity.rule.hostPorts" . | nindent 4 }}
+*/}}
+
+{{/*
+{{ include "kyverno.podSecurity.rule.procMount" . | nindent 4 }}
+*/}}
+
+{{/*
+{{ include "kyverno.podSecurity.rule.volumeTypes" . | nindent 4 }}
+*/}}
+
+{{- end }}

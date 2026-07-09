@@ -1,0 +1,31 @@
+{{- if .Values.containers.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.containers.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Container Security
+    policies.kyverno.io/category: Platform Security
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/minversion: 1.12.0
+    policies.kyverno.io/description: |
+      Enforces enterprise container security and operational standards
+      for workloads running on the Microbank Kubernetes Platform.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+{{ include "kyverno.containers.rule.containerPorts" . | nindent 4 }}
+
+{{ include "kyverno.containers.rule.envValidation" . | nindent 4 }}
+
+{{ include "kyverno.containers.rule.initContainers" . | nindent 4 }}
+
+{{ include "kyverno.containers.rule.lifecycleHooks" . | nindent 4 }}
+
+{{ include "kyverno.containers.rule.terminationMessagePolicy" . | nindent 4 }}
+
+{{- end }}
