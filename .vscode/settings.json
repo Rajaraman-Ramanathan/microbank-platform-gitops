@@ -1,0 +1,18 @@
+{
+    "yaml.disableSchemaDetection": [
+        "**/.github/workflows/*.yml",
+        "**/.github/workflows/*.yaml",
+        "**/.gitea/workflows/*.yml",
+        "**/.gitea/workflows/*.yaml",
+        "**/.forgejo/workflows/*.yml",
+        "**/.forgejo/workflows/*.yaml",
+        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/environments/stage/security/kyverno/policies/values.yaml",
+        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/kyverno/policies/helm/Chart.yaml"
+    ],
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/aerleon/aerleon/main/schemas/aerleon-policies.schema.json": [
+            "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/environments/stage/security/kyverno/policies/values.yaml"
+        ],
+        "https://www.schemastore.org/chart.json": "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/kyverno/policies/helm/Chart.yaml"
+    }
+}

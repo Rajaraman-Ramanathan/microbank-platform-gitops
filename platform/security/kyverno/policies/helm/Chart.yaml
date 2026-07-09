@@ -1,0 +1,6 @@
+apiVersion: v2
+name: kyverno-policies
+description: Enterprise Kyverno policy library for the Microbank platform
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
