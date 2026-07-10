@@ -1,0 +1,41 @@
+{{- if .Values.imageSecurity.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.imageSecurity.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Image Security
+    policies.kyverno.io/category: Supply Chain Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: |
+      Enforces enterprise container image governance and software
+      supply chain security standards.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+
+{{ include "kyverno.imageSecurity.rule.allowedRegistries" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.disallowLatestTag" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.imagePullPolicy" . | nindent 4 }}
+
+{{/* Future Rules
+
+{{ include "kyverno.imageSecurity.rule.trustedBaseImages" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.imageSignatures" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.imageAttestations" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.imageSbom" . | nindent 4 }}
+
+{{ include "kyverno.imageSecurity.rule.imageVulnerability" . | nindent 4 }}
+
+*/}}
+
+{{- end }}

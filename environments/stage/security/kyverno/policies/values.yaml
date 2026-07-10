@@ -137,3 +137,58 @@ podSecurity:
 
   volumeTypes:
     enabled: true
+
+###############################################################################
+# Image Security Policies
+###############################################################################
+
+imageSecurity:
+  enabled: true
+  policy:
+    name: image-security-policy
+
+  ###########################################################################
+  # Allowed Registries
+  ###########################################################################
+
+  allowedRegistries:
+    enabled: true
+    registries:
+      - docker.io/
+      - ghcr.io/
+      - quay.io/
+      - 65486509.dkr.ecr.ap-south-1.amazonaws.com/
+
+  ###########################################################################
+  # Latest Tag
+  ###########################################################################
+
+  disallowLatestTag:
+    enabled: true
+
+  ###########################################################################
+  # Image Pull Policy
+  ###########################################################################
+
+  imagePullPolicy:
+    enabled: true
+    requiredValue: Always
+
+  ###########################################################################
+  # Future Policies
+  ###########################################################################
+
+  trustedBaseImages:
+    enabled: false
+
+  imageSignatures:
+    enabled: false
+
+  imageAttestations:
+    enabled: false
+
+  imageSbom:
+    enabled: false
+
+  imageVulnerability:
+    enabled: false
