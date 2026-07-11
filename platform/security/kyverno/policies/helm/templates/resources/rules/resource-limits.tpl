@@ -10,18 +10,12 @@
   validate:
     message: All containers and init containers must define CPU and memory resource limits.
     foreach:
-      #
-      # Application Containers
-      #
       - list: request.object.spec.containers
         pattern:
           =(resources):
             =(limits):
               cpu: "?*"
               memory: "?*"
-      #
-      # Init Containers
-      #
       - list: request.object.spec.initContainers || []
         pattern:
           =(resources):

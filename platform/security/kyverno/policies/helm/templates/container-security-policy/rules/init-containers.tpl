@@ -17,8 +17,8 @@
     foreach:
       - list: request.object.spec.initContainers
         pattern:
-          securityContext:
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
+          =(securityContext):
+            =(runAsNonRoot): true
+            =(allowPrivilegeEscalation): false
 {{- end }}
 {{- end }}
