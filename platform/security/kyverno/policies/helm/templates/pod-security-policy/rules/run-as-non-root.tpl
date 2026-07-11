@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}            
   validate:
     message: All containers and init containers must run as a non-root user.
     foreach:

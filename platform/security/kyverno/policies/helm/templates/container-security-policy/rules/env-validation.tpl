@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}            
   validate:
     message: Sensitive environment variables must be sourced from Kubernetes Secrets or External Secrets.
     foreach:

@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}            
   validate:
     message: Privilege escalation is prohibited in containers and initcontainers.
     foreach:

@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}            
   validate:
     message: Images must not use the latest tag.
     foreach:

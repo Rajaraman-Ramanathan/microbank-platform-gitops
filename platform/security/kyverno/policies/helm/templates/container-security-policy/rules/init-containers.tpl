@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}            
   preconditions:
     all:
       - key: "{{ "{{ request.object.spec.initContainers[] || '' }}" }}"

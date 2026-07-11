@@ -6,6 +6,7 @@
       - resources:
           kinds:
             - Pod
+{{ include "kyverno.runtime.namespaceSelector" . | nindent 10 }}
   validate:
     message: Every application container must expose at least one containerPort.
     foreach:
