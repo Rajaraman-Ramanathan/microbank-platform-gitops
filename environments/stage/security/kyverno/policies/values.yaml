@@ -232,3 +232,53 @@ resources:
 
   limitRangeRequired:
     enabled: false
+
+###############################################################################
+# Metadata Policies
+###############################################################################
+
+metadata:
+
+  enabled: true
+
+  policy:
+
+    name: metadata-policy
+
+  ###########################################################################
+  # Kubernetes Standard Labels
+  ###########################################################################
+
+  requiredLabels:
+    enabled: true
+    labels:
+      - app.kubernetes.io/name
+      - app.kubernetes.io/instance
+      - app.kubernetes.io/version
+      - app.kubernetes.io/component
+      - app.kubernetes.io/part-of
+      - app.kubernetes.io/managed-by
+
+  ###########################################################################
+  # Organization Annotations
+  ###########################################################################
+
+  requiredAnnotations:
+    enabled: true
+    annotations:
+      - platform.microbank.io/owner
+      - platform.microbank.io/team
+      - platform.microbank.io/support
+
+  ###########################################################################
+  # Future Rules
+  ###########################################################################
+
+  recommendedLabels:
+    enabled: false
+
+  immutableLabels:
+    enabled: false
+
+  immutableAnnotations:
+    enabled: false
