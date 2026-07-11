@@ -7,11 +7,15 @@
           kinds:
             - Pod
   validate:
-    message: Containers must use a read-only root filesystem.
+    message: Containers and Initcontainers must use a read-only root filesystem.
     foreach:
       - list: request.object.spec.containers
         pattern:
-          securityContext:
-            readOnlyRootFilesystem: true
+          =(securityContext):
+            =(readOnlyRootFilesystem): true
+      - list: request.object.spec.initContainers || []
+        pattern:
+          =(securityContext):
+            =(readOnlyRootFilesystem): true
 {{- end }}
 {{- end }}

@@ -11,6 +11,9 @@
     foreach:
       - list: request.object.spec.containers
         pattern:
-          terminationMessagePolicy: {{ .Values.containers.terminationMessagePolicy.requiredValue }}
+          =(terminationMessagePolicy): {{ .Values.containers.terminationMessagePolicy.requiredValue }}
+      - list: request.object.spec.initContainers || []
+        pattern:
+          =(terminationMessagePolicy): {{ .Values.containers.terminationMessagePolicy.requiredValue }}
 {{- end }}
 {{- end }}

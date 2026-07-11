@@ -4,4 +4,6 @@ metadata:
   name: microbank-transaction
   labels:
     pod-security.kubernetes.io/enforce: restricted
+    security.microbank.io/profile: restricted
+    platform.microbank.io/type: application
     tier: workloads

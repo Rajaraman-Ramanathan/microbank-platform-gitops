@@ -4,4 +4,6 @@ metadata:
   name: kyverno
   labels:
     pod-security.kubernetes.io/enforce: restricted
+    security.microbank.io/profile: platform
+    platform.microbank.io/type: platform
     tier: security

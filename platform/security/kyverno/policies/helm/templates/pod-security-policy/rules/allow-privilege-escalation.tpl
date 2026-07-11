@@ -7,11 +7,15 @@
           kinds:
             - Pod
   validate:
-    message: Privilege escalation is prohibited.
+    message: Privilege escalation is prohibited in containers and initcontainers.
     foreach:
       - list: request.object.spec.containers
         pattern:
-          securityContext:
-            allowPrivilegeEscalation: false
+          =(securityContext):
+            =(allowPrivilegeEscalation): false
+      - list: request.object.spec.initContainers || []
+        pattern:
+          =(securityContext):
+            =(allowPrivilegeEscalation): false
 {{- end }}
 {{- end }}

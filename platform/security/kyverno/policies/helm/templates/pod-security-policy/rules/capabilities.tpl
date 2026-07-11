@@ -7,13 +7,21 @@
           kinds:
             - Pod
   validate:
-    message: Containers must drop all Linux capabilities.
+    message: Containers and initcontainers must drop all Linux capabilities.
     foreach:
       - list: request.object.spec.containers
         pattern:
-          securityContext:
-            capabilities:
-              drop:
+          =(securityContext):
+            =(capabilities):
+              =(drop):
+              {{- range .Values.podSecurity.capabilities.requiredDropCapabilities }}
+                - {{ . }}
+              {{- end }}
+      - list: request.object.spec.initContainers || []
+        pattern:
+          =(securityContext):
+            =(capabilities):
+              =(drop):
               {{- range .Values.podSecurity.capabilities.requiredDropCapabilities }}
                 - {{ . }}
               {{- end }}

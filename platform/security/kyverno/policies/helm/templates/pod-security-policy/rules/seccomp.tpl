@@ -7,12 +7,17 @@
           kinds:
             - Pod
   validate:
-    message: Containers must use RuntimeDefault seccomp profile.
+    message: All containers and init containers must use the RuntimeDefault seccomp profile.
     foreach:
       - list: request.object.spec.containers
         pattern:
-          securityContext:
-            seccompProfile:
-              type: {{ .Values.podSecurity.seccomp.requiredProfile }}
+          =(securityContext):
+            =(seccompProfile):
+              =(type): {{ .Values.podSecurity.seccomp.requiredProfile }}
+      - list: request.object.spec.initContainers || []
+        pattern:
+          =(securityContext):
+            =(seccompProfile):
+              =(type): {{ .Values.podSecurity.seccomp.requiredProfile }}
 {{- end }}
 {{- end }}

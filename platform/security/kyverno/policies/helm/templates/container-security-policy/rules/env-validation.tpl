@@ -9,7 +9,18 @@
   validate:
     message: Sensitive environment variables must be sourced from Kubernetes Secrets or External Secrets.
     foreach:
-      - list: request.object.spec.containers[].env[]
+      - list: request.object.spec.containers[].env[] || []
+        deny:
+          conditions:
+            all:
+              - key: "{{ "{{ element.name }}" }}"
+                operator: AnyIn
+                value:
+{{ toYaml .Values.containers.envValidation.sensitiveVariables | indent 18 }}
+              - key: "{{ "{{ element.value }}" }}"
+                operator: NotEquals
+                value: null
+      - list: request.object.spec.initContainers[].env || []
         deny:
           conditions:
             all:
