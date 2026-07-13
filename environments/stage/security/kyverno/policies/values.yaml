@@ -370,3 +370,63 @@ probes:
     initialDelay:
       min: 0
       max: 300
+
+###############################################################################
+# Secret Policies
+###############################################################################
+
+secrets:
+  enabled: true
+  policy:
+    name: secret-policy
+  sensitiveVariables:
+      - PASSWORD
+      - DB_PASSWORD
+      - DB_USERNAME
+      - DATABASE_PASSWORD
+      - DATABASE_USERNAME
+      - SECRET
+      - CLIENT_SECRET
+      - JWT_SECRET
+      - JWT_SIGNING_KEY
+      - TOKEN
+      - ACCESS_TOKEN
+      - REFRESH_TOKEN
+      - ACCESS_KEY
+      - SECRET_KEY
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - API_KEY
+      - PRIVATE_KEY
+
+  ###########################################################################
+  # Inline Secret Detection
+  ###########################################################################
+
+  disallowInlineSecrets:
+    enabled: true
+
+  ###########################################################################
+  # Secret References
+  ###########################################################################
+
+  requireSecretReferences:
+    enabled: false
+
+  ###########################################################################
+  # Secret Volume Mounts
+  ###########################################################################
+
+  requireReadOnlySecretMounts:
+    enabled: false
+
+  ###########################################################################
+  # Secret Types
+  ###########################################################################
+
+  restrictSecretTypes:
+    enabled: false
+    allowed:
+      - Opaque
+      - kubernetes.io/tls
+      - kubernetes.io/dockerconfigjson

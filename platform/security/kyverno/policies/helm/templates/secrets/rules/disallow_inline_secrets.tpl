@@ -1,5 +1,5 @@
-{{- define "kyverno.containers.rule.envValidation" }}
-{{- if .Values.containers.envValidation.enabled }}
+{{- define "kyverno.secrets.rule.disallowInlineSecrets" }}
+{{- if .Values.secrets.disallowInlineSecrets.enabled }}
 - name: prohibit-hardcoded-sensitive-environment-variables
   match:
     any:
@@ -17,7 +17,7 @@
               - key: "{{ "{{ element.name }}" }}"
                 operator: AnyIn
                 value:
-{{ toYaml .Values.containers.envValidation.sensitiveVariables | indent 18 }}
+{{ toYaml .Values.secrets.sensitiveVariables | indent 18 }}
               - key: "{{ "{{ element.value }}" }}"
                 operator: NotEquals
                 value: null
@@ -28,7 +28,7 @@
               - key: "{{ "{{ element.name }}" }}"
                 operator: AnyIn
                 value:
-{{ toYaml .Values.containers.envValidation.sensitiveVariables | indent 18 }}
+{{ toYaml .Values.secrets.sensitiveVariables | indent 18 }}
               - key: "{{ "{{ element.value }}" }}"
                 operator: NotEquals
                 value: null

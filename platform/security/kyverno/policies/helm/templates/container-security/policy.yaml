@@ -20,8 +20,6 @@ spec:
   rules:
 {{ include "kyverno.containers.rule.containerPorts" . | nindent 4 }}
 
-{{ include "kyverno.containers.rule.envValidation" . | nindent 4 }}
-
 {{ include "kyverno.containers.rule.initContainers" . | nindent 4 }}
 
 {{ include "kyverno.containers.rule.lifecycleHooks" . | nindent 4 }}
