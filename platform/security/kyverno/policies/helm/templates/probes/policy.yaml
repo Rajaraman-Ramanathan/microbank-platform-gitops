@@ -1,0 +1,28 @@
+{{- if .Values.probes.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.probes.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Probe Governance
+    policies.kyverno.io/category: Runtime Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: |
+      Enforces production readiness through
+      Kubernetes health probes.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+{{ include "kyverno.probes.rule.livenessProbe" . | nindent 4 }}
+
+{{ include "kyverno.probes.rule.readinessProbe" . | nindent 4 }}
+
+{{ include "kyverno.probes.rule.startupProbe" . | nindent 4 }}
+
+{{ include "kyverno.probes.rule.probeConfiguration" . | nindent 4 }}
+
+{{- end }}
