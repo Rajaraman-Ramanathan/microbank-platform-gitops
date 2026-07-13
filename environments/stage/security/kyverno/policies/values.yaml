@@ -282,3 +282,35 @@ metadata:
 
   immutableAnnotations:
     enabled: false
+
+###############################################################################
+# Storage Policies
+###############################################################################
+
+storage:
+  enabled: true
+  policy:
+    name: storage-policy
+
+  disallowHostPath:
+    enabled: true
+
+  requireStorageClass:
+    enabled: true
+
+  allowedAccessModes:
+    enabled: true
+
+    allowed:
+      - ReadWriteOnce
+
+  volumeMode:
+    enabled: true
+    required: Filesystem
+
+  pvcSizeLimit:
+    enabled: false
+    maximum: 20Gi
+
+  readOnlyVolumes:
+    enabled: false
