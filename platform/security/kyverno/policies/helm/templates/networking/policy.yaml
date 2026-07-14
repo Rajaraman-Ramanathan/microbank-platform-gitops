@@ -1,0 +1,27 @@
+{{- if .Values.networking.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.networking.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Networking Governance
+    policies.kyverno.io/category: Networking
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: |
+      Enforces enterprise networking standards
+      for application workloads.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+{{ include "kyverno.networking.rule.restrictServiceTypes" . | nindent 4 }}
+
+{{ include "kyverno.networking.rule.ingressTLS" . | nindent 4 }}
+
+{{ include "kyverno.networking.rule.ingressClass" . | nindent 4 }}
+
+{{ include "kyverno.networking.rule.hostNetwork" . | nindent 4 }}
+
+{{- end }}
