@@ -1,0 +1,37 @@
+{{- if .Values.scheduling.enabled }}
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: {{ include "kyverno.scheduling.policyName" . }}
+  annotations:
+    policies.kyverno.io/title: Scheduling Governance
+    policies.kyverno.io/category: High Availability
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Deployment,StatefulSet,DaemonSet,Job,CronJob
+    policies.kyverno.io/description: |
+      Enforces production scheduling standards
+      for application workloads.
+spec:
+  validationFailureAction: {{ .Values.global.validationFailureAction }}
+  background: {{ .Values.global.background }}
+  failurePolicy: {{ .Values.global.failurePolicy }}
+  emitWarning: {{ .Values.global.emitWarning }}
+  rules:
+{{ include "kyverno.scheduling.rule.topologySpread" . | nindent 4 }}
+
+{{ include "kyverno.scheduling.rule.podAntiAffinity" . | nindent 4 }}
+
+{{ include "kyverno.scheduling.rule.podDisruptionBudget" . | nindent 4 }}
+
+{{/*
+Future
+
+{{ include "kyverno.scheduling.rule.nodeSelector" . | nindent 4 }}
+
+{{ include "kyverno.scheduling.rule.tolerations" . | nindent 4 }}
+
+{{ include "kyverno.scheduling.rule.nodeAffinity" . | nindent 4 }}
+
+*/}}
+
+{{- end }}

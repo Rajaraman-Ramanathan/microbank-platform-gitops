@@ -12,7 +12,7 @@
     deny:
       conditions:
         any:
-          - key: "{{ request.object.spec.type || 'ClusterIP' }}"
+          - key: "{{ "{{ request.object.spec.type || 'ClusterIP' }}" }}"
             operator: AnyNotIn
             value:
 {{ toYaml .Values.networking.serviceTypes.allowed | indent 14 }}

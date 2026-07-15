@@ -12,7 +12,7 @@
     deny:
       conditions:
         any:
-          - key: "{{ request.object.spec.ingressClassName || '' }}"
+          - key: "{{ "{{ request.object.spec.ingressClassName || '' }}" }}"
             operator: AnyNotIn
             value:
 {{ toYaml .Values.networking.ingressClass.allowed | indent 14 }}
