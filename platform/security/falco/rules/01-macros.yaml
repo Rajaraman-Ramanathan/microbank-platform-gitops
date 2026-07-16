@@ -36,6 +36,22 @@
   condition: proc.name in (java_binaries)
 
 # -----------------------------------------------------------------------------
+# Parent Process Classification
+# -----------------------------------------------------------------------------
+
+- macro: shell_parent_process
+  condition: proc.pname in (shell_binaries)
+
+- macro: interpreter_parent_process
+  condition: proc.pname in (interpreter_binaries)
+
+- macro: package_manager_parent_process
+  condition: proc.pname in (package_manager_binaries)
+
+- macro: java_parent_process
+  condition: proc.pname in (java_binaries)
+
+# -----------------------------------------------------------------------------
 # Runtime Classification
 # -----------------------------------------------------------------------------
 
@@ -51,6 +67,9 @@
 - macro: interactive_terminal
   condition: proc.tty != 0
 
+- macro: container_spawned_process
+  condition: process_spawn and container_process
+
 # -----------------------------------------------------------------------------
 # Filesystem Classification
 # -----------------------------------------------------------------------------
@@ -65,28 +84,11 @@
   condition: proc.exepath startswith (writable_execution_paths)
 
 # -----------------------------------------------------------------------------
-# Network Classification
+# Trusted Platform Components
 # -----------------------------------------------------------------------------
 
-- macro: network_utility
-  condition: network_process
+- macro: trusted_platform_namespace
+  condition: k8s.ns.name in (trusted_platform_namespaces)
 
-- macro: download_utility
-  condition: download_process
-
-# -----------------------------------------------------------------------------
-# Kubernetes Classification
-# -----------------------------------------------------------------------------
-
-- macro: kubectl_process
-  condition: kubernetes_client_process
-
-- macro: kubernetes_container
-  condition: container and k8s.ns.name exists
-
-# -----------------------------------------------------------------------------
-# Application Classification
-# -----------------------------------------------------------------------------
-
-- macro: java_application
-  condition: java_process and container_process
+- macro: trusted_platform_component
+  condition: trusted_platform_namespace

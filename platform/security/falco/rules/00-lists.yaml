@@ -179,3 +179,16 @@
 - list: kubernetes_binaries
   items:
     - kubectl
+
+- list: trusted_platform_namespaces
+  items:
+    - kube-system
+    - istio-system
+    - monitoring
+    - aws-load-balancer-controller
+    - cert-manager
+    - external-secrets
+    - external-dns
+    - ebs-csi-driver
+    - falco
+    - kyverno

@@ -1,0 +1,121 @@
+# -----------------------------------------------------------------------------
+# Java Application Spawning Shell
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Spawning Shell
+  desc: >
+    Detect Java application processes spawning shell binaries
+    inside application containers.
+
+  condition: >
+    container_spawned_process
+    and shell_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application spawned a shell
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - privilege
+    - shell
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Spawning Shell
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Spawning Shell
+  desc: >
+    Detect scripting language interpreters spawning shells
+    inside application containers.
+
+  condition: >
+    container_spawned_process
+    and shell_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter spawned a shell
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - privilege
+    - shell
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Shell Executed From Writable Directory
+# -----------------------------------------------------------------------------
+
+- rule: Shell Executed From Writable Directory
+  desc: >
+    Detect shell execution from writable directories.
+
+  condition: >
+    container_spawned_process
+    and shell_process
+    and writable_path_execution
+    and not trusted_platform_component
+
+  output: >
+    Shell executed from writable directory
+    (command=%proc.cmdline
+    executable=%proc.exepath
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - privilege
+    - shell
+    - filesystem
+
+# -----------------------------------------------------------------------------
+# Package Manager Spawning Shell
+# -----------------------------------------------------------------------------
+
+- rule: Package Manager Spawning Shell
+  desc: >
+    Detect package manager processes spawning shell binaries
+    inside application containers.
+
+  condition: >
+    container_spawned_process
+    and shell_process
+    and package_manager_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Package manager spawned a shell
+    (command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - privilege
+    - shell
+    - package-manager
