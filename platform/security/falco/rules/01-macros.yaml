@@ -1,0 +1,92 @@
+# -----------------------------------------------------------------------------
+# Process Classification
+# -----------------------------------------------------------------------------
+
+- macro: shell_process
+  condition: proc.name in (shell_binaries)
+
+- macro: privilege_process
+  condition: proc.name in (privilege_binaries)
+
+- macro: interpreter_process
+  condition: proc.name in (interpreter_binaries)
+
+- macro: package_manager_process
+  condition: proc.name in (package_manager_binaries)
+
+- macro: download_process
+  condition: proc.name in (download_binaries)
+
+- macro: network_process
+  condition: proc.name in (network_binaries)
+
+- macro: archive_process
+  condition: proc.name in (archive_binaries)
+
+- macro: permission_process
+  condition: proc.name in (permission_binaries)
+
+- macro: capability_process
+  condition: proc.name in (capability_binaries)
+
+- macro: kubernetes_client_process
+  condition: proc.name in (kubernetes_binaries)
+
+- macro: java_process
+  condition: proc.name in (java_binaries)
+
+# -----------------------------------------------------------------------------
+# Runtime Classification
+# -----------------------------------------------------------------------------
+
+- macro: container_process
+  condition: container
+
+- macro: host_process
+  condition: not container
+
+- macro: process_spawn
+  condition: spawned_process
+
+- macro: interactive_terminal
+  condition: proc.tty != 0
+
+# -----------------------------------------------------------------------------
+# Filesystem Classification
+# -----------------------------------------------------------------------------
+
+- macro: sensitive_file_access
+  condition: fd.name in (sensitive_files)
+
+- macro: sensitive_directory_access
+  condition: fd.directory in (sensitive_directories)
+
+- macro: writable_path_execution
+  condition: proc.exepath startswith (writable_execution_paths)
+
+# -----------------------------------------------------------------------------
+# Network Classification
+# -----------------------------------------------------------------------------
+
+- macro: network_utility
+  condition: network_process
+
+- macro: download_utility
+  condition: download_process
+
+# -----------------------------------------------------------------------------
+# Kubernetes Classification
+# -----------------------------------------------------------------------------
+
+- macro: kubectl_process
+  condition: kubernetes_client_process
+
+- macro: kubernetes_container
+  condition: container and k8s.ns.name exists
+
+# -----------------------------------------------------------------------------
+# Application Classification
+# -----------------------------------------------------------------------------
+
+- macro: java_application
+  condition: java_process and container_process
