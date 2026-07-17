@@ -71,7 +71,6 @@
 
   condition: >
     container_spawned_process
-    and shell_process
     and writable_path_execution
     and not trusted_platform_component
 
@@ -91,31 +90,38 @@
     - filesystem
 
 # -----------------------------------------------------------------------------
-# Package Manager Spawning Shell
+# Unexpected Shell Execution
 # -----------------------------------------------------------------------------
 
-- rule: Package Manager Spawning Shell
+- rule: Unexpected Shell Execution
+
   desc: >
-    Detect package manager processes spawning shell binaries
-    inside application containers.
+    Detect shell processes executed by unexpected parent
+    processes inside application containers.
 
   condition: >
     container_spawned_process
     and shell_process
-    and package_manager_parent_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
     and not trusted_platform_component
 
   output: >
-    Package manager spawned a shell
-    (command=%proc.cmdline
+    Shell executed by unexpected parent process
+    (user=%user.name
+    command=%proc.cmdline
     parent=%proc.pname
     container=%container.name
+    image=%container.image.repository
     namespace=%k8s.ns.name
     pod=%k8s.pod.name)
 
-  priority: ERROR
+  priority: WARNING
 
   tags:
-    - privilege
     - shell
-    - package-manager
+    - process
+    - anomaly

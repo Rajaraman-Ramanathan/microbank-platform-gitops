@@ -1,0 +1,99 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Privilege Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Privilege Utility
+
+  desc: >
+    Detect Java application processes executing privilege
+    escalation utilities inside application containers.
+
+  condition: >
+    container_spawned_process
+    and privilege_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed privilege utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - privilege
+    - escalation
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Executing Privilege Utility
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Executing Privilege Utility
+
+  desc: >
+    Detect scripting language interpreters executing
+    privilege escalation utilities.
+
+  condition: >
+    container_spawned_process
+    and privilege_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter executed privilege utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - privilege
+    - escalation
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Unexpected Privilege Utility Execution
+# -----------------------------------------------------------------------------
+
+- rule: Unexpected Privilege Utility Execution
+
+  desc: >
+    Detect privilege escalation utilities executed by
+    unexpected parent processes inside application containers.
+
+  condition: >
+    container_spawned_process
+    and privilege_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
+    and not trusted_platform_component
+
+  output: >
+    Privilege utility executed by unexpected parent process
+    (command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - privilege
+    - escalation
+    - anomaly

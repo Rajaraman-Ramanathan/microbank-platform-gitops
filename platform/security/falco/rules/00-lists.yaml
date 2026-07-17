@@ -171,6 +171,8 @@
   items:
     - setcap
     - getcap
+    - capsh
+    - setpriv
 
 # -----------------------------------------------------------------------------
 # Kubernetes Client Utilities
