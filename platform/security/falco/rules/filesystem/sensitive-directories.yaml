@@ -1,21 +1,21 @@
 # -----------------------------------------------------------------------------
-# Java Application Accessing Sensitive File
+# Java Application Accessing Sensitive Directory
 # -----------------------------------------------------------------------------
 
-- rule: Java Application Accessing Sensitive File
+- rule: Java Application Accessing Sensitive Directory
 
   desc: >
     Detect Java application processes accessing
-    sensitive operating system files.
+    sensitive operating system directories.
 
   condition: >
     open_read
     and java_process
-    and sensitive_file_access
+    and sensitive_directory_access
     and not trusted_platform_component
 
   output: >
-    Java application accessed sensitive file
+    Java application accessed sensitive directory
     (user=%user.name
     command=%proc.cmdline
     file=%fd.name
@@ -29,31 +29,31 @@
   tags:
     - filesystem
     - application
-    - sensitive-file
+    - sensitive-directory
 
-#
 # -----------------------------------------------------------------------------
-# Shell Accessing Sensitive File
+# Shell Accessing Sensitive Directory
 # -----------------------------------------------------------------------------
 
-- rule: Shell Accessing Sensitive File
+- rule: Shell Accessing Sensitive Directory
 
   desc: >
-    Detect shell processes reading sensitive files
-    inside application containers.
+    Detect shell processes accessing
+    sensitive operating system directories.
 
   condition: >
     open_read
     and shell_process
-    and sensitive_file_access
+    and sensitive_directory_access
     and not trusted_platform_component
 
   output: >
-    Shell accessed sensitive file
+    Shell accessed sensitive directory
     (user=%user.name
     command=%proc.cmdline
     file=%fd.name
     container=%container.name
+    image=%container.image.repository
     namespace=%k8s.ns.name
     pod=%k8s.pod.name)
 
@@ -62,30 +62,31 @@
   tags:
     - filesystem
     - shell
-    - sensitive-file
+    - sensitive-directory
 
 # -----------------------------------------------------------------------------
-# Interpreter Accessing Sensitive File
+# Interpreter Accessing Sensitive Directory
 # -----------------------------------------------------------------------------
 
-- rule: Interpreter Accessing Sensitive File
+- rule: Interpreter Accessing Sensitive Directory
 
   desc: >
     Detect scripting language interpreters accessing
-    sensitive files inside application containers.
+    sensitive operating system directories.
 
   condition: >
     open_read
     and interpreter_process
-    and sensitive_file_access
+    and sensitive_directory_access
     and not trusted_platform_component
 
   output: >
-    Interpreter accessed sensitive file
+    Interpreter accessed sensitive directory
     (user=%user.name
     command=%proc.cmdline
     file=%fd.name
     container=%container.name
+    image=%container.image.repository
     namespace=%k8s.ns.name
     pod=%k8s.pod.name)
 
@@ -94,4 +95,4 @@
   tags:
     - filesystem
     - interpreter
-    - sensitive-file
+    - sensitive-directory

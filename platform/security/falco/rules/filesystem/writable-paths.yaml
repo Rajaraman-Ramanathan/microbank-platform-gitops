@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------------
+# Executable Launched From Writable Directory
+# -----------------------------------------------------------------------------
+
+- rule: Executable Launched From Writable Directory
+
+  desc: >
+    Detect executables launched from writable directories
+    inside application containers.
+
+  condition: >
+    container_spawned_process
+    and writable_path_execution
+    and not trusted_platform_component
+
+  output: >
+    Executable launched from writable directory
+    (user=%user.name
+    executable=%proc.exepath
+    command=%proc.cmdline
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - filesystem
+    - execution
+    - writable

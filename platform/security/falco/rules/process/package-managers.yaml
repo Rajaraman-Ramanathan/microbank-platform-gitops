@@ -1,0 +1,100 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Package Manager
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Package Manager
+
+  desc: >
+    Detect Java application processes executing
+    package management utilities.
+
+  condition: >
+    container_spawned_process
+    and package_manager_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed package manager
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - package-manager
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Executing Package Manager
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Executing Package Manager
+
+  desc: >
+    Detect scripting language interpreters executing
+    package management utilities.
+
+  condition: >
+    container_spawned_process
+    and package_manager_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter executed package manager
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: WARNING
+
+  tags:
+    - process
+    - package-manager
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Unexpected Package Manager Execution
+# -----------------------------------------------------------------------------
+
+- rule: Unexpected Package Manager Execution
+
+  desc: >
+    Detect package management utilities executed
+    by unexpected parent processes.
+
+  condition: >
+    container_spawned_process
+    and package_manager_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
+    and not trusted_platform_component
+
+  output: >
+    Package manager executed by unexpected parent
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - package-manager
+    - anomaly

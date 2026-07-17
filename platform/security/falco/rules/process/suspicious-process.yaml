@@ -1,0 +1,98 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Permission Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Permission Utility
+
+  desc: >
+    Detect Java application processes executing
+    Linux permission management utilities.
+
+  condition: >
+    container_spawned_process
+    and permission_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed permission utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - permission
+    - application
+
+# -----------------------------------------------------------------------------
+# Java Application Executing Kubernetes Client
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Kubernetes Client
+
+  desc: >
+    Detect Java application processes executing
+    Kubernetes client utilities.
+
+  condition: >
+    container_spawned_process
+    and kubernetes_client_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed Kubernetes client
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - kubernetes
+    - application
+
+# -----------------------------------------------------------------------------
+# Java Application Executing Archive Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Archive Utility
+
+  desc: >
+    Detect Java application processes executing
+    archive utilities inside application containers.
+
+  condition: >
+    container_spawned_process
+    and archive_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed archive utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: WARNING
+
+  tags:
+    - process
+    - archive
+    - application

@@ -1,0 +1,102 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Download Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Download Utility
+
+  desc: >
+    Detect Java application processes executing
+    download utilities inside application containers.
+
+  condition: >
+    container_spawned_process
+    and download_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed download utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - download
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Executing Download Utility
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Executing Download Utility
+
+  desc: >
+    Detect scripting language interpreters executing
+    download utilities inside application containers.
+
+  condition: >
+    container_spawned_process
+    and download_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter executed download utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: WARNING
+
+  tags:
+    - process
+    - download
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Unexpected Download Utility Execution
+# -----------------------------------------------------------------------------
+
+- rule: Unexpected Download Utility Execution
+
+  desc: >
+    Detect download utilities executed by
+    unexpected parent processes inside application containers.
+
+  condition: >
+    container_spawned_process
+    and download_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
+    and not trusted_platform_component
+
+  output: >
+    Download utility executed by unexpected parent process
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - process
+    - download
+    - anomaly

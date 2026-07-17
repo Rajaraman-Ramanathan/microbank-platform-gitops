@@ -71,6 +71,7 @@
 
   condition: >
     container_spawned_process
+    and shell_process
     and writable_path_execution
     and not trusted_platform_component
 
