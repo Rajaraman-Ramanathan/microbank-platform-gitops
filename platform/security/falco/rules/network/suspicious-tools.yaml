@@ -1,0 +1,102 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Network Reconnaissance Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Network Reconnaissance Utility
+
+  desc: >
+    Detect Java application processes executing
+    network reconnaissance utilities.
+
+  condition: >
+    container_spawned_process
+    and network_recon_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed network reconnaissance utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - network
+    - reconnaissance
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Executing Network Reconnaissance Utility
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Executing Network Reconnaissance Utility
+
+  desc: >
+    Detect scripting language interpreters executing
+    network reconnaissance utilities.
+
+  condition: >
+    container_spawned_process
+    and network_recon_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter executed network reconnaissance utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: WARNING
+
+  tags:
+    - network
+    - reconnaissance
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Unexpected Network Reconnaissance Utility Execution
+# -----------------------------------------------------------------------------
+
+- rule: Unexpected Network Reconnaissance Utility Execution
+
+  desc: >
+    Detect network reconnaissance utilities executed
+    by unexpected parent processes.
+
+  condition: >
+    container_spawned_process
+    and network_recon_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
+    and not trusted_platform_component
+
+  output: >
+    Network reconnaissance utility executed by unexpected parent process
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - network
+    - reconnaissance
+    - anomaly

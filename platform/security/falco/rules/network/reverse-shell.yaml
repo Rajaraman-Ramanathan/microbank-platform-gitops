@@ -1,0 +1,102 @@
+# -----------------------------------------------------------------------------
+# Java Application Executing Remote Connection Utility
+# -----------------------------------------------------------------------------
+
+- rule: Java Application Executing Remote Connection Utility
+
+  desc: >
+    Detect Java application processes executing
+    remote connection utilities.
+
+  condition: >
+    container_spawned_process
+    and remote_connection_process
+    and java_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Java application executed remote connection utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - network
+    - reverse-shell
+    - application
+
+# -----------------------------------------------------------------------------
+# Interpreter Executing Remote Connection Utility
+# -----------------------------------------------------------------------------
+
+- rule: Interpreter Executing Remote Connection Utility
+
+  desc: >
+    Detect scripting language interpreters executing
+    remote connection utilities.
+
+  condition: >
+    container_spawned_process
+    and remote_connection_process
+    and interpreter_parent_process
+    and not trusted_platform_component
+
+  output: >
+    Interpreter executed remote connection utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - network
+    - reverse-shell
+    - interpreter
+
+# -----------------------------------------------------------------------------
+# Unexpected Remote Connection Utility Execution
+# -----------------------------------------------------------------------------
+
+- rule: Unexpected Remote Connection Utility Execution
+
+  desc: >
+    Detect remote connection utilities executed
+    by unexpected parent processes.
+
+  condition: >
+    container_spawned_process
+    and remote_connection_process
+    and not (
+      shell_parent_process
+      or java_parent_process
+      or interpreter_parent_process
+    )
+    and not trusted_platform_component
+
+  output: >
+    Remote connection utility executed by unexpected parent process
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - network
+    - reverse-shell
+    - anomaly

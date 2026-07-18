@@ -76,12 +76,29 @@
 # Network Utilities
 # -----------------------------------------------------------------------------
 
-- list: network_binaries
+- list: remote_connection_binaries
   items:
     - nc
     - netcat
     - socat
     - telnet
+
+# -----------------------------------------------------------------------------
+# Network Reconnaissance Utilities
+# -----------------------------------------------------------------------------
+
+- list: network_recon_binaries
+  items:
+    - nmap
+    - tcpdump
+    - tshark
+    - netstat
+    - ss
+    - dig
+    - nslookup
+    - host
+    - arp
+    - ip
 
 # -----------------------------------------------------------------------------
 # Archiving Utilities
@@ -145,23 +162,6 @@
 - list: java_binaries
   items:
     - java
-
-# -----------------------------------------------------------------------------
-# Suspicious Child Processes
-# -----------------------------------------------------------------------------
-
-- list: suspicious_child_processes
-  items:
-    - bash
-    - sh
-    - ash
-    - python
-    - python3
-    - perl
-    - nc
-    - socat
-    - curl
-    - wget
 
 # -----------------------------------------------------------------------------
 # Capability Utilities

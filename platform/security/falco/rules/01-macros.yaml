@@ -18,7 +18,10 @@
   condition: proc.name in (download_binaries)
 
 - macro: network_process
-  condition: proc.name in (network_binaries)
+  condition: proc.name in (remote_connection_binaries)
+
+- macro: network_recon_process
+  condition: proc.name in (network_recon_binaries)
 
 - macro: archive_process
   condition: proc.name in (archive_binaries)
