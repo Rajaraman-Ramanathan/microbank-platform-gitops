@@ -1,0 +1,28 @@
+# -----------------------------------------------------------------------------
+# Process Running In Privileged Container
+# -----------------------------------------------------------------------------
+
+- rule: Process Running In Privileged Container
+
+  desc: >
+    Detect processes running
+    inside privileged containers.
+
+  condition: >
+    container
+    and container.privileged=true
+    and not trusted_platform_component
+
+  output: >
+    Process running inside privileged container
+    (command=%proc.cmdline
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - kubernetes
+    - privileged
+    - runtime

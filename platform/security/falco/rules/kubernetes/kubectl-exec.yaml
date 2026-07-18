@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------------
+# Shell Started Through kubectl exec
+# -----------------------------------------------------------------------------
+
+- rule: Shell Started Through kubectl Exec
+
+  desc: >
+    Detect shell processes started
+    through kubectl exec.
+
+  condition: >
+    container_spawned_process
+    and shell_process
+    and interactive_terminal
+    and not trusted_platform_component
+
+  output: >
+    Interactive shell started inside container
+    (user=%user.name
+    command=%proc.cmdline
+    tty=%proc.tty
+    container=%container.name
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: WARNING
+
+  tags:
+    - kubernetes
+    - kubectl-exec
+    - shell
