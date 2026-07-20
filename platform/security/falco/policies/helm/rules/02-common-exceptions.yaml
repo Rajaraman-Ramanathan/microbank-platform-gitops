@@ -1,0 +1,14 @@
+# -----------------------------------------------------------------------------
+# Trusted Platform Components
+# -----------------------------------------------------------------------------
+
+- macro: trusted_platform_namespace
+  condition: k8s.ns.name in (trusted_platform_namespaces)
+
+- macro: trusted_platform_component
+  condition: trusted_platform_namespace
+
+# trusted_backup_job
+# trusted_admin_job
+# trusted_scanner
+# trusted_ci_pipeline

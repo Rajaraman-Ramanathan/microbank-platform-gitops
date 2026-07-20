@@ -1,0 +1,18 @@
+apiVersion: v2
+name: microbank-falco-rules
+description: Enterprise runtime security rules for the Microbank Kubernetes Platform.
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - falco
+  - runtime-security
+  - kubernetes
+  - devsecops
+home: https://github.com/rajaraman/microbank-platform
+maintainers:
+  - name: Rajaraman Ramanathan
+sources:
+  - https://github.com/rajaraman/microbank-platform
+annotations:
+  category: Security

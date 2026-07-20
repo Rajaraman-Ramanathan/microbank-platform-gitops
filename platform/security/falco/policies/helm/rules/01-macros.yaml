@@ -87,16 +87,6 @@
   condition: proc.exepath startswith (writable_execution_paths)
 
 # -----------------------------------------------------------------------------
-# Trusted Platform Components
-# -----------------------------------------------------------------------------
-
-- macro: trusted_platform_namespace
-  condition: k8s.ns.name in (trusted_platform_namespaces)
-
-- macro: trusted_platform_component
-  condition: trusted_platform_namespace
-
-# -----------------------------------------------------------------------------
 # Application Components
 # -----------------------------------------------------------------------------
 
