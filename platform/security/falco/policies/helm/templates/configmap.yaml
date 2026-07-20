@@ -11,3 +11,27 @@ data:
 {{ .Files.Get "rules/01-macros.yaml" | indent 4 }}
   02-common-exceptions.yaml: |
 {{ .Files.Get "rules/02-common-exceptions.yaml" | indent 4 }}
+
+{{- if .Values.enabled.privilege }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/privilege/*.yaml") }}
+{{- end }}
+
+{{- if .Values.enabled.filesystem }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/filesystem/*.yaml") }}
+{{- end }}
+
+{{- if .Values.enabled.process }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/process/*.yaml") }}
+{{- end }}
+
+{{- if .Values.enabled.network }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/network/*.yaml") }}
+{{- end }}
+
+{{- if .Values.enabled.kubernetes }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/kubernetes/*.yaml") }}
+{{- end }}
+
+{{- if .Values.enabled.applications }}
+{{ include "microbank-falco-rules.ruleGroup" (list . "rules/applications/*.yaml") }}
+{{- end }}

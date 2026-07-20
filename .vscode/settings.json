@@ -10,7 +10,9 @@
         "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/kyverno/policies/helm/Chart.yaml",
         "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/falco/policies/helm/Chart.yaml",
         "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/falco/policies/helm/rules/02-common-exceptions.yaml",
-        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/falco/policies/helm/rules/01-macros.yaml"
+        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/falco/policies/helm/rules/01-macros.yaml",
+        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/platform/security/falco/policies/helm/values.yaml",
+        "file:///c%3A/Users/RAJARAMAN/Desktop/Project%20Repo/microbank-platform-gitops/environments/stage/security/falco/policies/values.yaml"
     ],
     "yaml.schemas": {
         "https://raw.githubusercontent.com/aerleon/aerleon/main/schemas/aerleon-policies.schema.json": [

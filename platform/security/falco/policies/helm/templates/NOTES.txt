@@ -1,0 +1,11 @@
+Microbank Falco Rules installed successfully.
+
+This chart installs the Microbank custom Falco runtime detection rules.
+
+Verify that the ConfigMap was created:
+
+  kubectl get configmap
+
+Verify that the Falco pod has loaded the custom rules:
+
+  kubectl logs -n falco <falco-pod-name>

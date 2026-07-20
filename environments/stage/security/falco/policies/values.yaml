@@ -1,0 +1,7 @@
+enabled:
+  applications: true
+  filesystem: true
+  kubernetes: true
+  network: true
+  privilege: true
+  process: true
