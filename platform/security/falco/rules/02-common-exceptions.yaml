@@ -1,0 +1,32 @@
+# -----------------------------------------------------------------------------
+# Trusted Platform Components
+# -----------------------------------------------------------------------------
+
+- macro: trusted_platform_component
+  condition: k8s.ns.name in (trusted_platform_namespaces)
+
+# -----------------------------------------------------------------------------
+# Interactive Shell
+# -----------------------------------------------------------------------------
+
+- macro: interactive_shell_session
+  condition: interactive_terminal
+
+# -----------------------------------------------------------------------------
+# Kubernetes API Client
+# -----------------------------------------------------------------------------
+
+- macro: kubernetes_api_client
+  condition: kubernetes_client_process
+
+# -----------------------------------------------------------------------------
+# Java Runtime
+# -----------------------------------------------------------------------------
+
+- macro: java_runtime
+  condition: java_process
+
+# trusted_backup_job
+# trusted_admin_job
+# trusted_scanner
+# trusted_ci_pipeline

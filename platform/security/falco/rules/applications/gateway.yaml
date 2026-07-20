@@ -1,0 +1,98 @@
+# -----------------------------------------------------------------------------
+# Gateway Spawning Shell
+# -----------------------------------------------------------------------------
+
+- rule: Gateway Spawning Shell
+
+  desc: >
+    Detect shell processes spawned inside
+    the Spring Cloud Gateway application.
+
+  condition: >
+    container_spawned_process
+    and gateway_service
+    and shell_process
+    and java_parent_process
+
+  output: >
+    Spring Cloud Gateway spawned a shell
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - application
+    - gateway
+    - shell
+
+# -----------------------------------------------------------------------------
+# Gateway Executing Download Utility
+# -----------------------------------------------------------------------------
+
+- rule: Gateway Executing Download Utility
+
+  desc: >
+    Detect download utilities executed
+    by the Spring Cloud Gateway application.
+
+  condition: >
+    container_spawned_process
+    and gateway_service
+    and download_process
+    and java_parent_process
+
+  output: >
+    Spring Cloud Gateway executed a download utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: ERROR
+
+  tags:
+    - application
+    - gateway
+    - download
+
+# -----------------------------------------------------------------------------
+# Gateway Executing Remote Connection Utility
+# -----------------------------------------------------------------------------
+
+- rule: Gateway Executing Remote Connection Utility
+
+  desc: >
+    Detect remote connection utilities
+    executed by the Spring Cloud Gateway application.
+
+  condition: >
+    container_spawned_process
+    and gateway_service
+    and remote_connection_process
+    and java_parent_process
+
+  output: >
+    Spring Cloud Gateway executed a remote connection utility
+    (user=%user.name
+    command=%proc.cmdline
+    parent=%proc.pname
+    container=%container.name
+    image=%container.image.repository
+    namespace=%k8s.ns.name
+    pod=%k8s.pod.name)
+
+  priority: CRITICAL
+
+  tags:
+    - application
+    - gateway
+    - remote-connection

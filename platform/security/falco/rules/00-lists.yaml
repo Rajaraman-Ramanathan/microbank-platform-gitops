@@ -182,6 +182,10 @@
   items:
     - kubectl
 
+# -----------------------------------------------------------------------------
+# Trusted platform components
+# -----------------------------------------------------------------------------
+
 - list: trusted_platform_namespaces
   items:
     - kube-system
@@ -194,3 +198,16 @@
     - ebs-csi-driver
     - falco
     - kyverno
+
+# -----------------------------------------------------------------------------
+# Application Namespaces
+# -----------------------------------------------------------------------------
+
+- list: application_namespaces
+  items:
+    - microbank-apigateway
+    - microbank-auth
+    - microbank-account
+    - microbank-transaction
+    - microbank-document
+    - microbank-notification

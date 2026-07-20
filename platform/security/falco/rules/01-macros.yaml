@@ -95,3 +95,13 @@
 
 - macro: trusted_platform_component
   condition: trusted_platform_namespace
+
+# -----------------------------------------------------------------------------
+# Application Components
+# -----------------------------------------------------------------------------
+
+- macro: application_service
+  condition: k8s.ns.name in (application_namespaces)
+
+- macro: gateway_service
+  condition: k8s.ns.name = microbank-apigateway
