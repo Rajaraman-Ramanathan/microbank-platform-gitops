@@ -4,11 +4,11 @@ metadata:
   name: platform-root
   namespace: argocd
 spec:
-  project: default
+  project: platform
   source:
     repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
     targetRevision: stage
-    path: argocd
+    path: argocd/stage
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

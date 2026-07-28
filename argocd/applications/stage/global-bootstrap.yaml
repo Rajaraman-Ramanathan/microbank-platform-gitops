@@ -1,16 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: platform-root
+  name: global-bootstrap
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   project: platform
   source:
     repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-    targetRevision: dev
-    path: argocd/dev
+    targetRevision: stage
+    path: platform/bootstrap
   destination:
-    server: https://kubernetes.default.svc
+    name: microbank-stage-cluster
     namespace: argocd
   syncPolicy:
     automated:

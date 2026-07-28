@@ -20,10 +20,11 @@ spec:
       ref: values
   destination:
     name: microbank-stage-cluster
-    namespace: ebs-csi-driver
+    namespace: kube-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
+    - CreateNamespace=false
     - ServerSideApply=true
