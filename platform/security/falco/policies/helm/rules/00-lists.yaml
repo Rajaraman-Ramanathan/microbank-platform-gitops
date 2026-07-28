@@ -191,11 +191,10 @@
     - kube-system
     - istio-system
     - monitoring
-    - aws-load-balancer-controller
+    - aws-load-balancer-system
     - cert-manager
     - external-secrets
-    - external-dns
-    - ebs-csi-driver
+    - external-dns-system
     - falco
     - kyverno
 

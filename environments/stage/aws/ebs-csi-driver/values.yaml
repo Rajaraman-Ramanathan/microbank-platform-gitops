@@ -20,6 +20,35 @@ aws-ebs-csi-driver:
         cpu: 500m
         memory: 512Mi
 
+    logLevel: 2
+
+    nodeSelector:
+      node-role: platform
+
+    tolerations:
+      - key: dedicated
+        operator: Equal
+        value: platform
+        effect: NoSchedule
+
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: controller
+
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: controller
+
   node:
     priorityClassName: system-node-critical
 
@@ -31,10 +60,13 @@ aws-ebs-csi-driver:
         cpu: 200m
         memory: 256Mi
 
-  storageClasses: []
-
-  enableVolumeScheduling: true
-
-  enableVolumeResizing: true
-
-  enableVolumeSnapshot: true
+  storageClasses:
+  - name: gp3
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"
+    volumeBindingMode: WaitForFirstConsumer
+    reclaimPolicy: Delete
+    allowVolumeExpansion: true
+    parameters:
+      type: gp3
+      fsType: ext4

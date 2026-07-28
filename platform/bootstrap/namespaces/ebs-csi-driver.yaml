@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ebs-csi-driver
+  name: kube-system
   labels:
     pod-security.kubernetes.io/enforce: restricted
     security.microbank.io/profile: platform
