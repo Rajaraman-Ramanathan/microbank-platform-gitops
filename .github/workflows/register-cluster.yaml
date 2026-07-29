@@ -1,0 +1,93 @@
+name: Register EKS Cluster
+
+on:
+  workflow_dispatch:
+    inputs:
+      cluster_name:
+        description: "Amazon EKS Cluster Name"
+        required: true
+        type: string
+
+      aws_region:
+        description: "AWS Region"
+        required: true
+        default: "ap-south-1"
+        type: string
+
+      environment:
+        description: "Target Environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+
+      argocd_namespace:
+        description: "ArgoCD Namespace"
+        required: false
+        default: "argocd"
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  register-cluster:
+    name: Register Cluster
+    runs-on: ubuntu-latest
+    env:
+      CLUSTER_NAME: ${{ inputs.cluster_name }}
+      AWS_REGION: ${{ inputs.aws_region }}
+      ENVIRONMENT: ${{ inputs.environment }}
+      ARGOCD_NAMESPACE: ${{ inputs.argocd_namespace }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      ####################################################
+      # Configure AWS Credentials
+      ####################################################
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      ####################################################
+      # Install kubectl
+      ####################################################
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      ####################################################
+      # Install jq
+      ####################################################
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      ####################################################
+      # Generate ArgoCD Cluster Secret
+      ####################################################
+
+      - name: Generate Cluster Secret
+        run: |
+          chmod +x .github/scripts/generate-cluster-secret.sh
+          .github/scripts/generate-cluster-secret.sh
+
+      ####################################################
+      # Register Cluster
+      ####################################################
+
+      - name: Register Cluster
+        uses: ./.github/actions/register-cluster
+        with:
+          cluster-secret: "${{ runner.temp }}/cluster-secret.yaml"
+          namespace: ${{ env.ARGOCD_NAMESPACE }}
