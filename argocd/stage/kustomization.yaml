@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - projects/stage
   - applications/stage
+  - applicationsets/stage

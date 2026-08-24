@@ -1,0 +1,166 @@
+replicaCount: 2
+
+image:
+  repository: ""
+  tag: ""
+  pullPolicy: IfNotPresent
+
+revisionHistoryLimit: 5
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 25%
+
+terminationGracePeriodSeconds: 30
+
+priorityClassName: ""
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  headless: false
+  annotations: {}
+  extraPorts: []
+  metrics:
+    enabled: true
+    port: 9090
+    targetPort: 9090
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  name: ""
+  automount: false
+  annotations: {}
+
+deploymentAnnotations: {}
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+      - ALL
+  seccompProfile:
+    type: RuntimeDefault
+
+configMap:
+  enabled: false
+  annotations: {}
+  data: {}
+  files: {}
+
+secret:
+  enabled: false
+  type: Opaque
+  annotations: {}
+  data: {}
+  files: {}
+
+resources:
+  enabled: true
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+hpa:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+  customMetrics: []
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      selectPolicy: Max
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 60
+        - type: Pods
+          value: 4
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      selectPolicy: Max
+      policies:
+        - type: Percent
+          value: 20
+          periodSeconds: 60
+
+pdb:
+  enabled: false
+  minAvailable: null
+  maxUnavailable: 1
+
+serviceMonitor:
+  enabled: false
+  port: metrics
+  path: /actuator/prometheus
+  interval: 30s
+  scrapeTimeout: 10s
+  honorLabels: false
+  labels: {}
+  metricRelabelings: []
+  relabelings: []
+
+externalSecret:
+  enabled: false
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws-secrets-manager
+  data: []
+
+readinessProbe:
+  enabled: false
+  config: {}
+
+livenessProbe:
+  enabled: false
+  config: {}
+
+startupProbe:
+  enabled: false
+  config: {}
+
+affinity:
+  enabled: false
+
+topologySpreadConstraints:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+initContainers: []
+
+global:
+  labels: {}
+  annotations: {}
+
+podLabels: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []

@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - projects/dev
   - applications/dev
+  - applicationsets/dev
