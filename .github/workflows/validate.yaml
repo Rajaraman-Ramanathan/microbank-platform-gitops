@@ -1,0 +1,4 @@
+name: validate
+
+on:
+  workflow_dispatch:

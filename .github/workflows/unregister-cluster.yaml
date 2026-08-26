@@ -1,0 +1,4 @@
+name: unregister-cluster
+
+on:
+  workflow_dispatch:

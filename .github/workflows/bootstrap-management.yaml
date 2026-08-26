@@ -1,0 +1,4 @@
+name: Bootstrap Management
+
+on:
+  workflow_dispatch:

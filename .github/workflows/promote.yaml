@@ -1,0 +1,4 @@
+name: promote
+
+on:
+  workflow_dispatch:

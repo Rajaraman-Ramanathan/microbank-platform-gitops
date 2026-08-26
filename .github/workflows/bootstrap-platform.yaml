@@ -1,0 +1,4 @@
+name: Bootstrap platform
+
+on:
+  workflow_dispatch:
