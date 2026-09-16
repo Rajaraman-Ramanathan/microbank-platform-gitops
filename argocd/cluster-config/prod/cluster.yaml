@@ -1,0 +1,17 @@
+apiVersion: platform.microbank.io/v1alpha1
+kind: ArgoCDCluster
+
+metadata:
+  name: microbank-prod-cluster
+
+spec:
+  environment: prod
+
+  aws:
+    accountId: "<PROD_ACCOUNT_ID>"
+    region: ap-south-1
+    clusterName: microbank-prod
+
+  authentication:
+    type: aws-iam
+    roleArn: arn:aws:iam::<PROD_ACCOUNT_ID>:role/MicroBankArgoCDProdClusterRole

@@ -1,0 +1,17 @@
+apiVersion: platform.microbank.io/v1alpha1
+kind: ArgoCDCluster
+
+metadata:
+  name: microbank-stage-cluster
+
+spec:
+  environment: stage
+
+  aws:
+    accountId: "<STAGE_ACCOUNT_ID>"
+    region: ap-south-1
+    clusterName: microbank-stage
+
+  authentication:
+    type: aws-iam
+    roleArn: arn:aws:iam::<STAGE_ACCOUNT_ID>:role/MicroBankArgoCDStageClusterRole
