@@ -1,4 +1,0 @@
-name: verify-platform
-
-on:
-  workflow_dispatch:

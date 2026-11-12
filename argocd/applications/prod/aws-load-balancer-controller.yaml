@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-load-balancer-controller
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  project: platform
+  sources:
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: stage
+      path: platform/aws/aws-load-balancer-controller/helm
+      helm:
+        releaseName: aws-load-balancer-controller
+        valueFiles:
+          - $values/environments/stage/aws/aws-load-balancer-controller/values.yaml
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: stage
+      ref: values
+  destination:
+    name: microbank-stage-cluster
+    namespace: aws-load-balancer-controller
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true

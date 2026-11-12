@@ -1,0 +1,72 @@
+aws-ebs-csi-driver:
+
+  controller:
+    replicaCount: 2
+
+    priorityClassName: platform-critical
+
+    serviceAccount:
+      create: true
+      name: ebs-csi-controller-sa
+
+      annotations:
+        eks.amazonaws.com/role-arn: ""
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+    logLevel: 2
+
+    nodeSelector:
+      node-role: platform
+
+    tolerations:
+      - key: dedicated
+        operator: Equal
+        value: platform
+        effect: NoSchedule
+
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: controller
+
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: ScheduleAnyway
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: controller
+
+  node:
+    priorityClassName: system-node-critical
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+
+  storageClasses:
+  - name: gp3
+    annotations:
+      storageclass.kubernetes.io/is-default-class: "true"
+    volumeBindingMode: WaitForFirstConsumer
+    reclaimPolicy: Delete
+    allowVolumeExpansion: true
+    parameters:
+      type: gp3
+      fsType: ext4

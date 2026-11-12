@@ -1,0 +1,97 @@
+{{/*
+Chart validations
+Fail early for invalid secret creation combinations
+*/}}
+{{- if and .Values.secret.enabled .Values.externalSecret.enabled }}
+  {{- fail "secret.enabled and externalSecret.enabled cannot both be true" }}
+{{- end }}
+
+{{/*
+Fail early for invalid HPA configuration
+*/}}
+{{- if and .Values.hpa.enabled (lt (int .Values.hpa.minReplicas) 1) }}
+  {{- fail "hpa.minReplicas must be >=1" }}
+{{- end }}
+
+{{- if and .Values.hpa.enabled (lt (int .Values.hpa.maxReplicas) (int .Values.hpa.minReplicas)) }}
+  {{ fail "hpa.maxReplicas must be >= minReplicas" }}
+{{- end }}
+
+{{- if and .Values.hpa.enabled (not .Values.resources.enabled) }}
+  {{ fail "HPA requires resources.enabled=true with CPU/Memory requests" }}
+{{- end }}
+
+{{/*
+Fail early for invalid PDB configuration
+*/}}
+{{- if and .Values.pdb.enabled .Values.pdb.minAvailable .Values.pdb.maxUnavailable }}
+  {{ fail "Specify either pdb.minAvailable or pdb.maxUnavailable, not both" }}
+{{- end }}
+
+{{- if and .Values.serviceMonitor.enabled (not .Values.service.metrics.enabled) }}
+  {{ fail "serviceMonitor requires service.metrics.enabled=true" }}
+{{- end }}
+
+{{/*
+Fail early for invalid NodePort configuration
+*/}}
+{{- if and (eq .Values.service.type "NodePort") (empty .Values.service.nodePort) }}
+  {{- fail "NodePort service requires nodePort value" }}
+{{- end }}
+
+{{/*
+Fail early for invalid image configuration
+*/}}
+{{- if empty .Values.image.repository }}
+  {{ fail "image.repository is required" }}
+{{- end }}
+
+{{/*
+Fail early for invalid image tag configuration
+*/}}
+{{- if empty .Values.image.tag }}
+  {{ fail "image.tag is required" }}
+{{- end }}
+
+{{/*
+Fail early for empty configmap
+*/}}
+{{- if and .Values.configMap.enabled (empty .Values.configMap.data) (empty .Values.configMap.files) }}
+  {{ fail "configMap.enabled=true requires data or files" }}
+{{- end }}
+
+{{/*
+Fail early for invalid secret configuration
+*/}}
+{{- if and .Values.secret.enabled (empty .Values.secret.data) (empty .Values.secret.files) }}
+  {{ fail "secret.enabled=true requires data or files" }}
+{{- end }}
+
+{{/*
+Fail early for invalid readinessProbe configuration
+*/}}
+{{- if and .Values.readinessProbe.enabled (empty .Values.readinessProbe.config) }}
+  {{ fail "readinessProbe.enabled=true requires readinessProbe.config" }}
+{{- end }}
+
+{{/*
+Fail early for invalid livenessProbe configuration
+*/}}
+{{- if and .Values.livenessProbe.enabled (empty .Values.livenessProbe.config) }}
+  {{ fail "livenessProbe.enabled=true requires livenessProbe.config" }}
+{{- end }}
+
+{{/*
+Fail early for invalid startupProbe configuration
+*/}}
+{{- if and .Values.startupProbe.enabled (empty .Values.startupProbe.config) }}
+  {{ fail "startupProbe.enabled=true requires startupProbe.config" }}
+{{- end }}
+
+{{/*
+Fail early for invalid ingress configuration
+*/}}
+{{- if and .Values.ingress.enabled (ne (.Values.global.component | default "backend") "gateway") }}
+  {{- fail "Ingress may only be enabled for gateway components" }}
+{{- end }}
+

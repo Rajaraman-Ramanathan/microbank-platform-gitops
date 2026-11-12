@@ -1,0 +1,30 @@
+cert-manager:
+
+  installCRDs: true
+
+  replicaCount: 2
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+  podLabels:
+    network-role: security
+
+  prometheus:
+    enabled: true
+    servicemonitor:
+      enabled: true
+
+  securityContext:
+    runAsNonRoot: true
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
