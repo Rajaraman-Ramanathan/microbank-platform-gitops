@@ -4,6 +4,7 @@ metadata:
   name: allow-mesh-traffic
   namespace: document-service
 spec:
+  action: ALLOW
   rules:
   - from:
     - source:

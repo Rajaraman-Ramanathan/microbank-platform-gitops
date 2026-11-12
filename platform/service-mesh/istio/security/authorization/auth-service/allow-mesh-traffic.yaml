@@ -4,6 +4,7 @@ metadata:
   name: allow-mesh-traffic
   namespace: auth-service
 spec:
+  action: ALLOW
   rules:
   - from:
     - source:

@@ -4,6 +4,7 @@ metadata:
   name: allow-istio-ingress
   namespace: apigateway-service
 spec:
+  action: ALLOW
   rules:
   - from:
     - source:

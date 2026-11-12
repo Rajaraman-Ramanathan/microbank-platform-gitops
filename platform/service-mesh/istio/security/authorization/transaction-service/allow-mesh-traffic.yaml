@@ -4,6 +4,7 @@ metadata:
   name: allow-mesh-traffic
   namespace: transaction-service
 spec:
+  action: ALLOW
   rules:
   - from:
     - source:
