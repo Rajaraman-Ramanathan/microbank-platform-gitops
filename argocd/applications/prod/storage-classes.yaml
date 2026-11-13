@@ -9,10 +9,10 @@ spec:
   project: platform
   source:
     repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-    targetRevision: stage
+    targetRevision: master
     path: platform/storage/storage-classes
   destination:
-    name: microbank-stage-cluster
+    name: microbank-prod-cluster
     namespace: default
   syncPolicy:
     automated:

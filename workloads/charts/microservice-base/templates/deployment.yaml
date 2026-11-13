@@ -54,8 +54,7 @@ spec:
       {{ end }}
       containers:
       - name: {{ include "microservice.name" . }}
-##      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        image: "{{ .Values.image.repository }}@{{ required "image.digest is required" .Values.image.digest }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
           {{- toYaml .Values.securityContext | nindent 10 }}

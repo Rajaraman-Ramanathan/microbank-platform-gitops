@@ -9,12 +9,14 @@ spec:
   project: platform
   source:
     repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-    targetRevision: stage
+    targetRevision: master
     path: platform/bootstrap
   destination:
-    name: microbank-stage-cluster
+    name: microbank-prod-cluster
     namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - ServerSideApply=true

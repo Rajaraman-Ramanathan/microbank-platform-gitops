@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: identity-keycloak
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "50"
+spec:
+  project: platform
+  sources:
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: master
+      path: platform/identity/keycloak/helm
+      helm:
+        releaseName: identity-keycloak
+        valueFiles:
+          - $values/environments/prod/identity/keycloak/values.yaml
+    - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
+      targetRevision: master
+      ref: values
+  destination:
+    name: microbank-prod-cluster
+    namespace: ingress-nginx
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true

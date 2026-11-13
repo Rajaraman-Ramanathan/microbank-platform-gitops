@@ -9,17 +9,17 @@ spec:
   project: platform
   sources:
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       path: platform/security/cert-manager/resources/clusterissuers/helm
       helm:
         releaseName: cert-manager-clusterissuers
         valueFiles:
-          - $values/environments/stage/security/cert-manager/clusterissuers/values.yaml
+          - $values/environments/prod/security/cert-manager/clusterissuers/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       ref: values
   destination:
-    name: microbank-stage-cluster
+    name: microbank-prod-cluster
     namespace: cert-manager
   syncPolicy:
     automated:

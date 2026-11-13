@@ -4,22 +4,22 @@ metadata:
   name: ebs-csi-driver
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "35"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: platform
   sources:
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       path: platform/aws/ebs-csi-driver/helm
       helm:
         releaseName: aws-ebs-csi-driver
         valueFiles:
-          - $values/environments/stage/aws/ebs-csi-driver/values.yaml
+          - $values/environments/prod/aws/ebs-csi-driver/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       ref: values
   destination:
-    name: microbank-stage-cluster
+    name: microbank-prod-cluster
     namespace: kube-system
   syncPolicy:
     automated:

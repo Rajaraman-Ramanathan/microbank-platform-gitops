@@ -9,17 +9,17 @@ spec:
   project: platform
   sources:
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       path: platform/aws/aws-load-balancer-controller/helm
       helm:
         releaseName: aws-load-balancer-controller
         valueFiles:
-          - $values/environments/stage/aws/aws-load-balancer-controller/values.yaml
+          - $values/environments/prod/aws/aws-load-balancer-controller/values.yaml
     - repoURL: https://github.com/Rajaraman-Ramanathan/microbank-platform-gitops.git
-      targetRevision: stage
+      targetRevision: master
       ref: values
   destination:
-    name: microbank-stage-cluster
+    name: microbank-prod-cluster
     namespace: aws-load-balancer-controller
   syncPolicy:
     automated:
