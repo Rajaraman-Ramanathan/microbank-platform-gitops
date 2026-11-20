@@ -114,10 +114,10 @@ ingress:
     alb.ingress.kubernetes.io/success-codes: "200"
 
     # External DNS
-    external-dns.alpha.kubernetes.io/hostname: api.prod.microbankapp.com
+    external-dns.alpha.kubernetes.io/hostname: api.microbankapp.com
 
   hosts:
-    - host: api.prod.microbankapp.com
+    - host: api.microbankapp.com
       paths:
         - path: /api
           pathType: Prefix

@@ -7,7 +7,7 @@ external-dns:
 
   registry: txt
 
-  txtOwnerId: microbank-stage
+  txtOwnerId: microbank-prod
 
   ingressClassFilters:
     - nginx
